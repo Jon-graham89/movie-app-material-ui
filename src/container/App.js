@@ -29,7 +29,9 @@ function App() {
 	const [skeleton] = useState(["4k2", "2r4", "6w5", "5q7", "8f6"]);
 
 	useEffect(() => {
-		fetch(`http://www.omdbapi.com/?apikey=86a0e89f&s=${searchInput}`)
+		fetch(
+			`${process.env.REACT_APP_OMDB_URL}=${process.env.REACT_APP_OMDB_API_KEY}=${searchInput}`
+		)
 			.then((res) => res.json())
 			.then((result) => setMovieData(result.Search));
 	}, [searchInput]);
@@ -43,7 +45,7 @@ function App() {
 	// else isValidating = false
 	// isValidating && skeleton
 	// !isValidating && movieDisplay
-
+	console.log(process.env);
 	const optimizedSearch = useCallback(debounce(movieSearchHandler, 500), []);
 	// checks to adjust properties so that buttons become disabled
 
