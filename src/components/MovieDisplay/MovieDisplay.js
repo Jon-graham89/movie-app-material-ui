@@ -26,12 +26,13 @@ export default function MovieDisplay({
 }) {
 	const movies = movieData.map((movie, index) => {
 		movie.buttonStyle = "enabled";
+		// enable / disable button checker
 		nominated.forEach((film) => {
 			if (film.imdbID === movie.imdbID) {
 				movie.buttonStyle = "disabled";
 			}
 		});
-		// add another loop for nominated to check if exists then change the button enabled / disabled
+
 		return (
 			<Card variant="outlined" style={{ minWidth: 275 }} key={movie.imdbID}>
 				<CardContent>

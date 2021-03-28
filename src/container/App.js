@@ -12,15 +12,6 @@ import Skeleton from "@material-ui/lab/Skeleton";
 
 // i could implement a back end with logins so that the results actually get saved
 
-//api call http://www.omdbapi.com/?apikey=86a0e89f&s=batman
-//api key 86a0e89f
-
-//debouncer
-//security
-// skeleton
-// hover css
-//built with material ui
-
 function App() {
 	const [movieData, setMovieData] = useState([]);
 	const [searchInput, setSearchInput] = useState("");
@@ -41,15 +32,9 @@ function App() {
 		e ? setIsValidating(true) : setIsValidating(false);
 	};
 
-	//searchInput && !movieData then isValidating = true
-	// else isValidating = false
-	// isValidating && skeleton
-	// !isValidating && movieDisplay
 	console.log(process.env);
 	const optimizedSearch = useCallback(debounce(movieSearchHandler, 500), []);
-	// checks to adjust properties so that buttons become disabled
 
-	//
 	const addNomineeHandler = (id) => {
 		if (nominated.length === 5) {
 			return alert("Already selected 5 films");
