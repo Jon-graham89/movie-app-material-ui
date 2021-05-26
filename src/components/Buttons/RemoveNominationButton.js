@@ -6,6 +6,7 @@ const RemoveNominationButton = ({ index, removeNomineeHandler, theme }) => {
 		<Button
 			onClick={() => removeNomineeHandler(index)}
 			variant="contained"
+			fullWidth
 			style={{ color: "black", backgroundColor: theme.palette.secondary.main }}
 		>
 			Remove Nominee

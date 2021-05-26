@@ -9,39 +9,75 @@ import Box from "@material-ui/core/Box";
 import { CardMedia } from "@material-ui/core";
 import "../MovieDisplay/MovieDisplay";
 import RemoveNominationButton from "../Buttons/RemoveNominationButton";
+import Modal from "@material-ui/core/Modal";
+import Grid from "@material-ui/core/Grid";
+
+const useStyles = makeStyles((theme) => ({
+	paper: {
+		margin: "20% 30%",
+		width: 350,
+		backgroundColor: theme.palette.background.paper,
+		border: "2px solid #000",
+		boxShadow: theme.shadows[5],
+		padding: theme.spacing(2, 4, 3),
+	},
+	cardItems: {
+		outline: "1px solid grey",
+		padding: "3%",
+	},
+	image: {
+		width: "90%",
+		height: "auto",
+	},
+}));
 
 export default function NominationDisplay({
 	nominated,
 	removeNomineeHandler,
 	theme,
+	open,
+	handleClose,
 }) {
+	const classes = useStyles();
+
+	const body = (
+		<div className={classes.paper}>
+			<h3>Your results have been submitted</h3>
+			<p>I do not have a backend yet</p>
+			<Button
+				variant="contained"
+				color="primary"
+				onClick={() =>
+					alert("thanks for submitting, back end coming eventually")
+				}
+			>
+				Submit Nominees
+			</Button>
+		</div>
+	);
+
 	const movies = nominated.map((movie, index) => {
 		return (
-			<Card variant="outlined" style={{ minWidth: 275 }} key={movie.imdbID}>
-				<CardContent>
-					<CardMedia
-						image={movie.Poster}
-						style={{ height: "400px" }}
-						className="hvr-grow"
-					/>
-					<Box display="block" style={{ whiteSpace: "pre-line" }}>
-						<h4>{movie.Title}</h4> <h5>{movie.Year}</h5>
-					</Box>
-				</CardContent>
-				<CardActions>
-					<RemoveNominationButton
-						index={index}
-						id={movie.imdbID}
-						removeNomineeHandler={removeNomineeHandler}
-						theme={theme}
-					/>
-				</CardActions>
-			</Card>
+			<Grid item xs={6} sm={4} className={classes.cardItems}>
+				<img src={movie.Poster} className={classes.image} />
+				<Typography align="center" noWrap gutterBottom>
+					{movie.Title}
+				</Typography>
+				<RemoveNominationButton
+					index={index}
+					id={movie.imdbID}
+					removeNomineeHandler={removeNomineeHandler}
+					theme={theme}
+				/>
+			</Grid>
 		);
 	});
 	return (
-		<Box display="flex" style={{ overflow: "auto", whiteSpace: "nowrap" }}>
+		<Grid container className={classes.movieContainer}>
 			{movies}
-		</Box>
+			<Modal open={open} onClose={handleClose}>
+				{body}
+			</Modal>
+		</Grid>
 	);
 }

@@ -1,22 +1,29 @@
 import React from "react";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import Box from "@material-ui/core/Box";
-import { CardMedia } from "@material-ui/core";
 import "./MovieDisplay.css";
 import MovieButton from "../Buttons/MovieButton";
+import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
 
-const cursorStyle = {
-	enabled: {
-		cursor: "pointer",
-		pointerEvents: "auto",
+import Typography from "@material-ui/core/Typography";
+
+const useStyles = makeStyles((theme) => ({
+	paper: {
+		margin: "20% 30%",
+		width: 350,
+		backgroundColor: theme.palette.background.paper,
+		border: "2px solid #000",
+		boxShadow: theme.shadows[5],
+		padding: theme.spacing(2, 4, 3),
 	},
-	disabled: {
-		cursor: "not-allowed",
-		pointerEvents: "none",
+	cardItems: {
+		outline: "1px solid grey",
+		padding: "3%",
 	},
-};
+	image: {
+		width: "90%",
+		height: "auto",
+	},
+}));
 
 export default function MovieDisplay({
 	movieData,
@@ -24,6 +31,7 @@ export default function MovieDisplay({
 	theme,
 	nominated,
 }) {
+	const classes = useStyles();
 	const movies = movieData.map((movie, index) => {
 		movie.buttonStyle = "enabled";
 		// enable / disable button checker
@@ -34,32 +42,24 @@ export default function MovieDisplay({
 		});
 
 		return (
-			<Card variant="outlined" style={{ minWidth: 275 }} key={movie.imdbID}>
-				<CardContent>
-					<CardMedia
-						image={movie.Poster}
-						style={{ height: "400px" }}
-						className="hvr-grow"
-					/>
-					<Box display="block" style={{ whiteSpace: "pre-line" }}>
-						<h4>{movie.Title}</h4> <h5>{movie.Year}</h5>
-					</Box>
-				</CardContent>
-				<CardActions>
-					<MovieButton
-						index={index}
-						id={movie.imdbID}
-						addNomineeHandler={addNomineeHandler}
-						theme={theme}
-						buttonStyle={movie.buttonStyle}
-					/>
-				</CardActions>
-			</Card>
+			<Grid item xs={6} sm={4} className={classes.cardItems}>
+				<img src={movie.Poster} className={classes.image} />
+				<Typography align="center" noWrap gutterBottom>
+					{movie.Title}
+				</Typography>
+				<MovieButton
+					id={movie.imdbID}
+					addNomineeHandler={addNomineeHandler}
+					index={index}
+					buttonStyle={movie.buttonStyle}
+					theme={theme}
+				/>
+			</Grid>
 		);
 	});
 	return (
-		<Box display="flex" style={{ overflow: "auto", whiteSpace: "nowrap" }}>
+		<Grid container className={classes.movieContainer}>
 			{movies}
-		</Box>
+		</Grid>
 	);
 }

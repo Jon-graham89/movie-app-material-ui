@@ -21,6 +21,7 @@ const MovieButton = ({ id, addNomineeHandler, theme, buttonStyle }) => {
 			onClick={() => addNomineeHandler(id)}
 			style={cursorStyle[buttonStyle]}
 			variant="contained"
+			fullWidth
 		>
 			Nominate
 		</Button>
